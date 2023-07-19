@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use \app\entity\Books;
 use yii\helpers\Html;
 
-echo HTML::a('Выдать книгу', ['books/out']);
+echo HTML::a('Выдать книгу', ['books-out/add']);
 /** @var ActiveDataProvider $dataProvider */
 echo GridView::widget([
     'dataProvider' => $dataProvider,
@@ -18,10 +18,16 @@ echo GridView::widget([
         'date_deadline',
         [
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{edit}',
+            'template' => '{back} {edit}',
             'buttons' => [
-                'edit' => function ($url, $model, $key) {
+                'back' => function ($url, $model, $key) {
                     return HTML::a('возрат', [
+                        'back',
+                        'id' => $key
+                    ]);
+                },
+                'edit' => function ($url, $model, $key) {
+                    return HTML::a('редактировать ', [
                         'back',
                         'id' => $key
                     ]);

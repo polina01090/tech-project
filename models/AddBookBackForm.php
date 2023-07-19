@@ -10,12 +10,12 @@ class AddBookBackForm extends Model
 {
     public $user_staff_id;
     public $date;
-    public $condition;
+    public $condition_id;
 
     public function rules()
     {
         return [
-            [['user_staff_id','date', 'condition'], 'required', 'message' => 'Обязательно для заполнения'],
+            [['user_staff_id','date', 'condition_id'], 'required', 'message' => 'Обязательно для заполнения'],
         ];
     }
 

@@ -17,6 +17,11 @@ class m230707_092025_book_ct extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(100)->notNull()
         ]);
+        //остояние книги
+        $this->createTable('condition', [
+            'id' => $this->primaryKey(),
+            'name' => $this->string(100)->notNull()
+        ]);
         // база с сотрудниками
         $this->createTable('users_staff', [
             'id' => $this->primaryKey(),
@@ -69,13 +74,22 @@ class m230707_092025_book_ct extends Migration
             'user_staff_id' => $this->integer()->notNull(),
             'out_id' => $this->integer()->notNull(),
             'date' => $this->date()->notNull(),
-            'condition' => $this->string(15)->notNull(),
+            'condition_id' => $this->integer()->notNull(),
         ]);
         $this->addForeignKey(
             'fk-users_staff-staff_id',
             'users_staff',
             'staff_id',
             'staff',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'fk-back_books-condition_id',
+            'back_books',
+            'condition_id',
+            'condition',
             'id',
             'CASCADE',
             'CASCADE'

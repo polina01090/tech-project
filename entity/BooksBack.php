@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
  * @property int $user_staff_id
  * @property int $out_id
  * @property date $date
- * @property date $condition
+ * @property int $condition_id
  */
 
 class BooksBack extends ActiveRecord
