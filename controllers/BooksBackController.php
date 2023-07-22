@@ -2,7 +2,7 @@
 
 
 namespace app\controllers;
-
+use app\entity\Books;
 use app\entity\BooksBack;
 use app\entity\BooksOut;
 use app\models\AddBookBackForm;
@@ -19,38 +19,8 @@ use yii\data\ActiveDataProvider;
 use \yii\web\Controller;
 
 
-class BooksOutController extends Controller
+class BooksBackController extends Controller
 {
-    public function actionList(){
-        $books_out = BookOutRepository::getBooksOutAsArray();
-        $books_back_id = BookBackRepository::getBooksBack();
-        $books_backArr = [];
-        foreach ($books_back_id as $book_back_id){
-            $books_backArr[$book_back_id->id] = $book_back_id->out_id;
-        }
-        $books_art = BookRepository::getBooks();
-        $books_artArray = [];
-        foreach ($books_art as $book_art){
-            $books_artArray[$book_art->id] = $book_art->article;
-        }
-        $users_staffs = UserStaffRepository::getUsers();
-        $userStaffArray = [];
-        foreach ($users_staffs as $user_staff){
-            $userStaffArray[$user_staff->id] = $user_staff->fio;
-        }
-        $users_clients = UserClientRepository::getUsers();
-        $userClientArray = [];
-        foreach ($users_clients as $users_client){
-            $userClientArray[$users_client->id] = $users_client->fio;
-        }
-        return $this->render('list', [
-            'books_out'=>$books_out,
-            'books_art' => $books_artArray,
-            'users_staff' => $userStaffArray,
-            'users_client' => $userClientArray,
-            'book_back_id' => $books_backArr,
-        ]);
-    }
     public function actionEdit($id){
         $book = BookRepository::getBook($id);
         $model = new EditBookForm();
@@ -73,29 +43,48 @@ class BooksOutController extends Controller
 
     }
 
+    public function actionList(){
+        $users_staffs = UserStaffRepository::getUsers();
+        $conditions = ConditionRepository::getConditions();
+        $books_back = BookBackRepository::getBooksBackAsArray();
+        $userStaffArray = [];
+        foreach ($users_staffs as $user_staff){
+            $userStaffArray[$user_staff->id] = $user_staff->fio;
+        }
+        $conditionsArray = [];
+        foreach ($conditions as $condition){
+            $conditionsArray[$condition->id] = $condition->name;
+        }
 
-
+        return $this->render('list', [
+            'books_back'=>$books_back,
+            'conditions' => $conditionsArray,
+            'users_staffs' => $userStaffArray,
+        ]);
+    }
     public function actionAdd($id){
         $users_staffs = UserStaffRepository::getUsers();
         $userStaffArray = [];
         foreach ($users_staffs as $user_staff){
             $userStaffArray[$user_staff->id] = $user_staff->fio;
         }
-        $users_client = UserClientRepository::getUsers();
-        $userClientArray = [];
-        foreach ($users_client as $user_client){
-            $userClientArray[$user_client->id] = $user_client->fio;
+        $conditions = ConditionRepository::getConditions();
+        $conditionsArray = [];
+        foreach ($conditions as $condition){
+            $conditionsArray[$condition->id] = $condition->name;
         }
-        $model = new AddBookOutForm();
+        $book_id = BookOutRepository::getBookOut($id)->book_id;
+        $model = new AddBookBackForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            BookOutRepository::addBookOut($id, $model->user_staff_id, $model->user_client_id, $model->date, $model->date_deadline);
-            BookRepository::CountMinus($id);
+            BookBackRepository::addBookBack($model->user_staff_id, $id, $model->date, $model->condition_id);
+            BookRepository::CountPlus($book_id);
             $this->redirect('list');
         }
         return $this->render('add', [
             'model' => $model,
             'users_staffs' => $userStaffArray,
-            'users_client' => $userClientArray,
+            'conditionArray' => $conditionsArray
+
         ]);
     }
 

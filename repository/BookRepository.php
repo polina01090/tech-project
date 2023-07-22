@@ -14,9 +14,17 @@ class BookRepository
     public static function getBooks(){
         return Books::find()->all();
     }
+    public static function getBooksAsArray(){
+        return Books::find()->asArray()->all();
+    }
     public static function CountMinus($id){
         $book = Books::find()->where(['id' => $id])->one();
         $book->count -= 1;
+        $book->save();
+    }
+    public static function CountPlus($id){
+        $book = Books::find()->where(['id' => $id])->one();
+        $book->count += 1;
         $book->save();
     }
     public static function addBook($name, $article, $date, $author, $count){

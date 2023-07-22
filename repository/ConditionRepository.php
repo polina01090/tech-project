@@ -14,6 +14,9 @@ class ConditionRepository
     public static function getConditions(){
         return Condition::find()->all();
     }
+    public static function getConditionsAsArray(){
+        return Condition::find()->asArray()->all();
+    }
     public static function addCondition($name){
         $staff = new Condition();
         $staff->name = $name;

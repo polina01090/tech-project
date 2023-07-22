@@ -14,6 +14,9 @@ class UserStaffRepository
     public static function getUsers(){
         return UserStaff::find()->all();
     }
+    public static function getUsersAsArray(){
+        return UserStaff::find()->asArray()->all();
+    }
     public static function addUser($fio, $staff_id){
         $user = new UserStaff();
         $user->fio = $fio;

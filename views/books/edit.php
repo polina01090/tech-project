@@ -5,7 +5,6 @@
 
 /** @var $model */
 
-
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -14,14 +13,14 @@ use yii\bootstrap4\Html;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'name')->textInput(['class' => 'add_form']) ?>
+    <?= $form->field($model, 'article')->textInput(['class' => 'add_form']) ?>
+    <?= $form->field($model, 'date')->Input('date', ['class' => 'add_form']) ?>
+    <?= $form->field($model, 'author')->textInput(['class' => 'add_form']) ?>
+    <?= $form->field($model, 'count')->Input('number', ['class' => 'add_form']) ?>
 
-    <?= $form->field($model, 'name')->textInput() ?>
-    <?= $form->field($model, 'article')->textInput() ?>
-    <?= $form->field($model, 'date')->Input('date') ?>
-    <?= $form->field($model, 'author')->textInput() ?>
-    <?= $form->field($model, 'count')->Input('number') ?>
     <div class="form-group">
-        <?= Html::submitButton("редактировать") ?>
+        <?= Html::submitButton("Редактировать", ['class' => 'add_form']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

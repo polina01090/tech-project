@@ -5,7 +5,7 @@
 
 /** @var $model */
 /** @var $users_staffs */
-/** @var $condition */
+/** @var $conditionArray */
 
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
@@ -15,12 +15,12 @@ use yii\bootstrap4\Html;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'user_staff_id')->dropdownList($users_staffs);?>
-    <?= $form->field($model, 'date')->Input('date') ?>
-    <?= $form->field($model, 'condition_id')->dropdownList($condition) ?>
+    <?= $form->field($model, 'user_staff_id')->dropdownList($users_staffs, ['class' => 'add_form']);?>
+    <?= $form->field($model, 'date')->Input('date', ['class' => 'add_form']) ?>
+    <?= $form->field($model, 'condition_id')->dropdownList($conditionArray, ['class' => 'add_form']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton("Добавить") ?>
+        <?= Html::submitButton("Редактировать") ?>
     </div>
 
     <?php ActiveForm::end(); ?>

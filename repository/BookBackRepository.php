@@ -14,6 +14,9 @@ class BookBackRepository
     public static function getBooksBack(){
         return BooksBack::find()->all();
     }
+    public static function getBooksBackAsArray(){
+        return BooksBack::find()->asArray()->all();
+    }
     public static function addBookBack($user_staff_id, $out_id, $date, $condition_id){
         $book = new BooksBack();
         $book->user_staff_id = $user_staff_id;

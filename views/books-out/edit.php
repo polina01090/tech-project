@@ -4,10 +4,8 @@
 /** @var yii\bootstrap4\ActiveForm $form */
 
 /** @var $model */
-/** @var $books */
 /** @var $users_staffs */
 /** @var $users_client */
-
 
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
@@ -17,14 +15,13 @@ use yii\bootstrap4\Html;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'user_staff_id')->dropdownList($users_staffs, ['class' => 'add_form']);?>
+    <?= $form->field($model, 'user_client_id')->dropdownList($users_client, ['class' => 'add_form']);?>
+    <?= $form->field($model, 'date')->Input('date', ['class' => 'add_form']) ?>
+    <?= $form->field($model, 'date_deadline')->Input('date', ['class' => 'add_form']) ?>
 
-    <?= $form->field($model, 'book_id')->dropdownList($books);?>
-    <?= $form->field($model, 'user_staff_id')->dropdownList($users_staffs);?>
-    <?= $form->field($model, 'user_client_id')->dropdownList($users_client);?>
-    <?= $form->field($model, 'date')->Input('date') ?>
-    <?= $form->field($model, 'date_deadline')->Input('date') ?>
     <div class="form-group">
-        <?= Html::submitButton("редактировать") ?>
+        <?= Html::submitButton("Редактировать", ['class' => 'add_form']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

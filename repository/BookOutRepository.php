@@ -15,6 +15,9 @@ class BookOutRepository
     public static function getBooksOut(){
         return BooksOut::find()->all();
     }
+    public static function getBooksOutAsArray(){
+        return BooksOut::find()->all();
+    }
     public static function addBookOut($book_id, $user_staff_id, $user_client_id, $date, $date_deadline){
         $book = new BooksOut();
 
