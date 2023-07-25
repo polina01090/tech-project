@@ -8,23 +8,43 @@ use app\repository\UserStaffRepository;
 use app\repository\StaffRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use \yii\web\Controller;
 
 
 class UserStaffController extends Controller
 {
-    public function actionList(){
-        $dataProvider = new ActiveDataProvider([
-            'query' => UserStaff::find()
-                ->select(['users_staff.id','users_staff.fio', 'staff.name as staff'])
-                ->LeftJoin('staff', 'users_staff.staff_id = staff.id')
-                ->asArray(),
-            'pagination' => [
-                'pageSize' => 20,
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['add', 'edit', 'list', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['add', 'edit', 'list', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ], [
+                        'actions' => [],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
             ],
-        ]);
+        ];
+    }
+    public function actionList(){
+        $users = UserStaffRepository::getUsersAsArray();
+        $staffs = StaffRepository::getStaffs();
+        $staffsArray = [];
+        foreach ($staffs as $staff){
+            $staffsArray[$staff->id] = $staff->name;
+        }
         return $this->render('list', [
-            'dataProvider'=>$dataProvider
+            'users'=>$users,
+            'staffs' => $staffsArray
         ]);
     }
     public function actionEdit($id){

@@ -64,9 +64,9 @@ a.desc:after {
     color: rgba(255, 255, 255, 0.5);
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .nav li > form > button.logout {
-        display:block;
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 0;
@@ -81,4 +81,101 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.table_books {
+    width: 50vw;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif, sans-serif;
+    text-align: left;
+    border-collapse: separate;
+    border-spacing: 5px;
+    background: #ECE9E0;
+    color: #656665;
+    border: 16px solid #ECE9E0;
+    border-radius: 20px;
+    margin: 0 auto;
+}
+.table_books th {
+    font-size: 18px;
+    padding: 10px;
+}
+.edit_form{
+    color: white;
+    width: 30vw;
+    margin: 0 auto;
+}
+.edit_form label{
+}
+.edit_form input[type=text], .edit_form input[type=number], .edit_form input[type=date]{
+    width: 30vw;
+}
+.table_books td {
+    background: #F5D7BF;
+    padding: 10px;
+}
+.table_books td a {
+    display: flex;
+}
+.log_form{
+    width: 50vw;
+    color: white;
+}
+.add_form{
+    width: 200px;
+    height: 60px;
+    background:#CC5555FF ;
+    color: #2d384a;
+    font-weight: bold;
+    font-size: 20px;
+    align-items: center;
+}
+
+.center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 15px;
+    color: white;
+}
+.center label{
+    margin:10px 15px;
+}
+.center label input[type=radio], .center label input[type=text]{
+    margin:0 10px;
+}
+.edit, .delete{
+    width: 60px;
+    margin: 0 auto;
+}
+.center input[type=submit], .center input[type=reset]{
+    width: 100px;
+    background: #689c32;
+    color: white;
+    padding: 5px 3px;
+    margin: 0 10px;
+}
+.center input[type=reset]{
+    background: #9c3232;
+    border: 3px solid #3d0505;
+}
+.center input[type=submit]{
+    background: #689c32;
+    border: 3px solid #243d05;
+}
+.head_info{
+    text-decoration-line: underline;
+    color: #0a73bb;
+    margin-right: 15px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.text_info{
+    font-size: 25px;
+}
+body{
+    background: #2D384A;
 }

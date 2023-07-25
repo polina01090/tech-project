@@ -6,19 +6,21 @@
 /** @var $model */
 /** @var $staffs */
 
-
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
 ?>
-<div class="site-login">
+<div class="site-login edit_form">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
+    <label>Введите ФИО</label>
+    <?= $form->field($model, 'fio')->textInput()->label(false); ?>
+    <label>Выберите должность</label>
+    <?= $form->field($model, 'staff_id')->dropdownList($staffs)->label(false);?>
 
-    <?= $form->field($model, 'fio')->textInput() ?>
-    <?= $form->field($model, 'staff_id')->dropdownList($staffs);?>    <div class="form-group">
-        <?= Html::submitButton("редактировать") ?>
+    <div class="form-group">
+        <?= Html::submitButton("Редактировать", ['class' => 'add_form']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

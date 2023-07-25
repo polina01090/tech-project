@@ -10,9 +10,8 @@ use yii\helpers\Html;
 /** @var $books_art */
 /** @var $users_staff */
 /** @var $users_client */
-var_dump($book_back_id);
 ?>
-<table>
+<table class="table_books">
     <thead>
     <tr>
         <th>id</th>
@@ -34,8 +33,8 @@ var_dump($book_back_id);
             <td><?php echo $users_client[$row['user_client_id']]; ?></td>
             <td><?php echo $row['date']; ?></td>
             <td><?php echo $row['date_deadline']; ?></td>
-            <td><a href="edit?id=<?= $row['id'] ?>"><img src="../../web/images/edit.png" alt="" style="width: 30px; height: 30px"></a></td>
-            <td><a href="delete?id=<?= $row['id'] ?>">удалить</a></td>
+            <td><a href="edit?id=<?= $row['id'] ?>"><img class="edit" src="/images/edit.png" alt=""></a></td>
+            <td><a href="delete?id=<?= $row['id'] ?>"><img class="delete" src="/images/delete.png" alt=""></a></td>
             <?php if (!in_array($row['id'], $book_back_id)): ?>
                 <td><a href="/books-back/add?id=<?= $row['id'] ?>">Возрат</a></td>
             <?php endif; ?>

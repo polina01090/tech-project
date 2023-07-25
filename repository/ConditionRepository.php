@@ -12,10 +12,10 @@ class ConditionRepository
         return Condition::find()->where(['id' => $id])->one();
     }
     public static function getConditions(){
-        return Condition::find()->all();
+        return Condition::find()->orderBy(['id' => SORT_ASC])->all();
     }
     public static function getConditionsAsArray(){
-        return Condition::find()->asArray()->all();
+        return Condition::find()->orderBy(['id' => SORT_ASC])->asArray()->all();
     }
     public static function addCondition($name){
         $staff = new Condition();

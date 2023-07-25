@@ -16,13 +16,31 @@ use app\repository\UserClientRepository;
 use app\repository\UserStaffRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use \yii\web\Controller;
 
 
 class BooksOutController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['add', 'edit', 'list', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['add', 'edit', 'list', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ],
+            ],
+        ];
+    }
     public function actionList(){
-        $books_out = BookOutRepository::getBooksOutAsArray();
+        $books_out = BookOutRepository::getBooksOutAsArray([]);
         $books_back_id = BookBackRepository::getBooksBack();
         $books_backArr = [];
         foreach ($books_back_id as $book_back_id){
@@ -52,23 +70,34 @@ class BooksOutController extends Controller
         ]);
     }
     public function actionEdit($id){
-        $book = BookRepository::getBook($id);
-        $model = new EditBookForm();
+        $users_staffs = UserStaffRepository::getUsers();
+        $userStaffArray = [];
+        foreach ($users_staffs as $user_staff){
+            $userStaffArray[$user_staff->id] = $user_staff->fio;
+        }
+        $users_client = UserClientRepository::getUsers();
+        $userClientArray = [];
+        foreach ($users_client as $user_client){
+            $userClientArray[$user_client->id] = $user_client->fio;
+        }
+        $book = BookOutRepository::getBookOut($id);
+        $model = new AddBookOutForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            BookRepository::editBook($id,  $model->name, $model->article, $model->date, $model->author, $model->count);
+            BookOutRepository::editBookOut($id, $model->user_staff_id, $model->user_client_id, $model->date, $model->date_deadline);
             $this->redirect('list');
         }
-        $model->name = $book->name;
-        $model->article = $book->article;
+        $model->user_staff_id = $book->user_staff_id;
+        $model->user_client_id = $book->user_client_id;
         $model->date = $book->date;
-        $model->author = $book->author;
-        $model->count = $book->count;
+        $model->date_deadline = $book->date_deadline;
         return $this->render('edit', [
             'model' => $model,
+            'users_staffs' => $userStaffArray,
+            'users_client' => $userClientArray,
         ]);
     }
     public function actionDelete($id){
-        BookRepository::deleteBook($id);
+        BookOutRepository::deleteBookOut($id);
         return $this->redirect('list');
 
     }

@@ -9,13 +9,13 @@ use yii\helpers\Html;
 /** @var $users_staffs */
 /** @var $conditions */
 ?>
-<table>
+<table class="table_books">
     <thead>
     <tr>
         <th>id</th>
         <th>Сотрудник</th>
         <th>ID выдачи</th>
-        <th>Дата Выдачи</th>
+        <th>Дата сдачи книги</th>
         <th>Состояние книги</th>
         <th></th>
         <th></th>
@@ -29,8 +29,8 @@ use yii\helpers\Html;
             <td><?php echo $row['out_id']; ?></td>
             <td><?php echo $row['date']; ?></td>
             <td><?php echo $conditions[$row['condition_id']]; ?></td>
-            <td><a href="edit?id=<?=$row['id']?>"><img src="../../web/images/edit.png" alt="" style="width: 30px; height: 30px"></a></td>
-            <td><a href="delete?id=<?=$row['id']?>">удалить</a></td>
+            <td><a href="/books-back/edit?id=<?=$row['id']?>"><img class="edit" src="/images/edit.png" alt=""></a></td>
+            <td><a href="/books-back/delete?id=<?=$row['id']?>"><img class="delete" src="/images/delete.png" alt=""></a></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

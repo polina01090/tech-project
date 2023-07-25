@@ -1,4 +1,4 @@
-async function requestCalc(name) {
+async function request(name) {
     const res = await fetch("/books/search", {
         method: "post",
         body: JSON.stringify({
@@ -8,13 +8,12 @@ async function requestCalc(name) {
     const result = await res.json();
     console.log(result["res"]);
 }
-
-let form = document.getElementById('form');
+alert('djjw')
+let form = document.forms['search_book'];
 console.log(form);
-
 form.addEventListener("submit", (evt) => {
     evt.preventDefault();
-    let name = form.elements.namedItem("name");
+    let name = form.elements.namedItem("count");
     console.log(name.value);
-    requestCalc(name.value);
-});
+    request(name);
+})

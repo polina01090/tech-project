@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var string $content */
 
 use app\assets\AppAsset;
@@ -28,31 +29,77 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'Книжный каталог',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
+    $linkItems = [
+        ['label' => 'Главная', 'url' => ['/books/list']],
+    ];
+    if (!Yii::$app->user->isGuest) {
+
+        $linkItems[] = [
+            'label' => 'Поиск',
+            'items' => [
+                ['label' => 'Книг', 'url' => ['/books/search']],
+                ['label' => 'Клиентов', 'url' => ['/user-client/search']],
+            ]
+        ];
+        $linkItems[] = [
+            'label' => 'Настройки',
+            'items' => [
+                ['label' => 'Должности', 'url' => ['/staff/list']],
+                ['label' => 'Состояния книг', 'url' => ['/condition/list']],
+            ]
+        ];
+        $linkItems[] = [
+            'label' => 'Добавление',
+            'items' => [
+                ['label' => 'Добаление книг', 'url' => ['/books/add']],
+                ['label' => 'Добаление должностей', 'url' => ['/staff/add']],
+                ['label' => 'Добаление состояния книг', 'url' => ['/condition/add']],
+            ]
+        ];
+        $linkItems[] = [
+            'label' => 'Книги',
+            'items' => [
+                ['label' => 'Список книг', 'url' => ['/books/list']],
+                ['label' => 'Список выданных книг', 'url' => ['/books-out/list']],
+                ['label' => 'Возрат книг', 'url' => ['/books-back/list']],
+            ]
+        ];
+        $linkItems[] = [
+            'label' => 'Клиенты',
+            'items' => [
+                ['label' => 'Список клиентов', 'url' => ['/user-client/list']],
+                ['label' => 'Добавление клиентов', 'url' => ['/user-client/add']],
+            ]
+        ];
+        $linkItems[] = [
+            'label' => 'Сотрудники',
+            'items' => [
+                ['label' => 'Список сотрудников', 'url' => ['/user-staff/list']],
+                ['label' => 'Добавление сотрудников', 'url' => ['/user-staff/add']],
+            ]
+        ];
+        $linkItems[] = (
+            '<li>'
+            . Html::beginForm(['/user/logout'], 'post', ['class' => 'form-inline'])
+            . Html::submitButton(
+                'Выход (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'btn btn-link logout']
+            )
+            . Html::endForm()
+            . '</li>'
+        );
+    } else {
+        $linkItems[] = ['label' => 'Вход', 'url' => ['/user/login']];
+    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $linkItems,
     ]);
     NavBar::end();
     ?>

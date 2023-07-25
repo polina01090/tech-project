@@ -9,15 +9,15 @@ use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="site-login edit_form">
+    <h1><?= Html::encode($this->title)?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'name')->textInput() ?>
+    <label>Введите название</label>
+    <?= $form->field($model, 'name')->textInput()->label(false); ?>
 
     <div class="form-group">
-        <?= Html::submitButton("Добавить") ?>
+        <?= Html::submitButton("Добавить", ['class' => 'add_form']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

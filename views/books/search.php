@@ -1,12 +1,9 @@
 <?php
-\app\assets\SearchAsset::register($this);
 
 /** @var yii\web\View $this */
-/** @var yii\bootstrap4\ActiveForm $form */
 
-/** @var $model */
-/** @var $users_staffs */
-/** @var $conditionArray */
+/** @var $counts */
+
 
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
@@ -19,9 +16,38 @@ use yii\bootstrap4\Html;
     <title>Title</title>
 </head>
 <body>
-<form id="form">
-    <input name="name" placeholder="">
-    <input type="submit">
+<form class="center" action="search" method="get" name="search_book">
+    <label>имя книги<input name="name" type="text"></label>
+    <label>в наличии<input name="count" type="radio" value="yes"></label>
+    <label>нет в наличии<input name="count" type="radio" value="no"></label>
+    <input type="submit" value="поиск">
+    <input type="reset" value="очистить">
 </form>
+<?php if (!empty($counts)): ?>
+    <table class="table_books">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Имя</th>
+            <th>Артикул</th>
+            <th>Дата поступления</th>
+            <th>Автор</th>
+            <th>Количество</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($counts as $row): ?>
+            <tr>
+                <td><?php echo $row['id']; ?></td>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['article']; ?></td>
+                <td><?php echo $row['date']; ?></td>
+                <td><?php echo $row['author']; ?></td>
+                <td><?php echo $row['count']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
 </body>
 </html>

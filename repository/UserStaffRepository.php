@@ -12,10 +12,10 @@ class UserStaffRepository
         return UserStaff::find()->where(['id' => $id])->one();
     }
     public static function getUsers(){
-        return UserStaff::find()->all();
+        return UserStaff::find()->orderBy(['id' => SORT_ASC])->all();
     }
     public static function getUsersAsArray(){
-        return UserStaff::find()->asArray()->all();
+        return UserStaff::find()->orderBy(['id' => SORT_ASC])->asArray()->all();
     }
     public static function addUser($fio, $staff_id){
         $user = new UserStaff();

@@ -7,20 +7,33 @@ use app\models\EditStaffForm;
 use app\repository\StaffRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use \yii\web\Controller;
 
 
 class StaffController extends Controller
 {
-    public function actionList(){
-        $dataProvider = new ActiveDataProvider([
-            'query' => Staff::find(),
-            'pagination' => [
-                'pageSize' => 20,
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['add', 'edit', 'list', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['add', 'edit', 'list', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
             ],
-        ]);
+        ];
+    }
+    public function actionList(){
+        $staffs = StaffRepository::getStaffsAsArray();
         return $this->render('list', [
-            'dataProvider'=>$dataProvider
+            'staffs'=>$staffs
         ]);
     }
     public function actionEdit($id){

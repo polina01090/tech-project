@@ -9,16 +9,20 @@ use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
 ?>
-<div class="site-login">
+<div class="site-login edit_form">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'name')->textInput(['class' => 'add_form']) ?>
-    <?= $form->field($model, 'article')->textInput(['class' => 'add_form']) ?>
-    <?= $form->field($model, 'date')->Input('date', ['class' => 'add_form']) ?>
-    <?= $form->field($model, 'author')->textInput(['class' => 'add_form']) ?>
-    <?= $form->field($model, 'count')->Input('number', ['class' => 'add_form']) ?>
-
+    <label>Введите название книги</label>
+    <?= $form->field($model, 'name')->textInput()->label(false);?>
+    <label>Введите артикул товара</label>
+    <?= $form->field($model, 'article')->textInput()->label(false); ?>
+    <label>Введите дату поступления</label>
+    <?= $form->field($model, 'date')->Input('date')->label(false); ?>
+    <label>Введите Автора</label>
+    <?= $form->field($model, 'author')->textInput()->label(false); ?>
+    <label>Введите количество книг</label>
+    <?= $form->field($model, 'count')->Input('number')->label(false); ?>
     <div class="form-group">
         <?= Html::submitButton("Добавить", ['class' => 'add_form']) ?>
     </div>

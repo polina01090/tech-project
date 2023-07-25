@@ -16,29 +16,61 @@ use app\repository\UserClientRepository;
 use app\repository\UserStaffRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use \yii\web\Controller;
 
 
 class BooksBackController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['add', 'edit', 'list', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['add', 'edit', 'list', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ], [
+                        'actions' => [],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
     public function actionEdit($id){
-        $book = BookRepository::getBook($id);
-        $model = new EditBookForm();
+        $book = BookBackRepository::getBookBack($id);
+        $users_staffs = UserStaffRepository::getUsers();
+        $userStaffArray = [];
+        foreach ($users_staffs as $user_staff){
+            $userStaffArray[$user_staff->id] = $user_staff->fio;
+        }
+        $conditions = ConditionRepository::getConditions();
+        $conditionsArray = [];
+        foreach ($conditions as $condition){
+            $conditionsArray[$condition->id] = $condition->name;
+        }
+        $model = new AddBookBackForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            BookRepository::editBook($id,  $model->name, $model->article, $model->date, $model->author, $model->count);
+            BookBackRepository::editBookBack($id,  $model->user_staff_id, $model->date, $model->condition_id);
             $this->redirect('list');
         }
-        $model->name = $book->name;
-        $model->article = $book->article;
+        $model->user_staff_id = $book->user_staff_id;
         $model->date = $book->date;
-        $model->author = $book->author;
-        $model->count = $book->count;
+        $model->condition_id = $book->condition_id;
         return $this->render('edit', [
             'model' => $model,
+            'conditions' => $conditionsArray,
+            'users_staffs' => $userStaffArray,
         ]);
     }
     public function actionDelete($id){
-        BookRepository::deleteBook($id);
+        BookBackRepository::deleteBookBack($id);
         return $this->redirect('list');
 
     }
@@ -83,7 +115,7 @@ class BooksBackController extends Controller
         return $this->render('add', [
             'model' => $model,
             'users_staffs' => $userStaffArray,
-            'conditionArray' => $conditionsArray
+            'conditions' => $conditionsArray
 
         ]);
     }

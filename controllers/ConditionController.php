@@ -7,20 +7,33 @@ use app\models\EditConditionForm;
 use app\repository\ConditionRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use \yii\web\Controller;
 
 
 class ConditionController extends Controller
 {
-    public function actionList(){
-        $dataProvider = new ActiveDataProvider([
-            'query' => Condition::find(),
-            'pagination' => [
-                'pageSize' => 20,
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['add', 'edit', 'list', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['add', 'edit', 'list', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
             ],
-        ]);
+        ];
+    }
+    public function actionList(){
+        $conditions = ConditionRepository::getConditionsAsArray([]);
         return $this->render('list', [
-            'dataProvider'=>$dataProvider
+            'conditions'=>$conditions
         ]);
     }
     public function actionEdit($id){

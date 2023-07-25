@@ -13,4 +13,5 @@ class SearchAsset extends AppAsset
     public $js = [
         'js/books.js'
     ];
+
 }

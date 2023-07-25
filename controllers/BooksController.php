@@ -14,15 +14,44 @@ use app\repository\UserClientRepository;
 use app\repository\UserStaffRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use \yii\web\Controller;
 
 
 class BooksController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['add', 'edit', 'list', 'delete','search'],
+                'rules' => [
+                    [
+                        'actions' => ['add', 'edit', 'delete', 'list', 'search'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ], [
+                        'actions' => ['list'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
     public function actionList(){
         $books = BookRepository::getBooksAsArray();
         return $this->render('list', [
             'books'=>$books
+        ]);
+
+    }
+    public function actionBook($id){
+        $book = BookRepository::getBookAsArray($id);
+        return $this->render('book', [
+            'book'=>$book
         ]);
 
     }
@@ -42,18 +71,23 @@ class BooksController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionSearch(){
-        $data = json_decode(file_get_contents('php://input'), true);
-        $name = $data['name'];
-        var_dump($data);
+    public function actionSearch()
+    {
+        $request = Yii::$app->request;
+        $count = $request->get('count');
+        $name = $request->get('name');
+        if ($name !== null){
+            $counts = BookRepository::getBooksCountAsArray(['>=', 'count', 0], $name);
+            if ($count === 'yes'){
+                $counts = BookRepository::getBooksCountAsArray(['>', 'count', 0], $name);
+            } elseif ($count === 'no'){
+                $counts = BookRepository::getBooksCountAsArray(['=', 'count', 0], $name);
+            }
+        }
 
-
-        echo json_encode([
-            "res" => $name
-        ]);
 
         return $this->render('search', [
-            'data' => $data
+            'counts' => $counts
         ]);
     }
     public function actionDelete($id){

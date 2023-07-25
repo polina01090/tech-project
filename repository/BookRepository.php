@@ -5,6 +5,7 @@ namespace app\repository;
 
 
 use app\entity\Books;
+use yii\i18n\Formatter;
 
 class BookRepository
 {
@@ -12,10 +13,16 @@ class BookRepository
         return Books::find()->where(['id' => $id])->one();
     }
     public static function getBooks(){
-        return Books::find()->all();
+        return Books::find()->orderBy(['id' => SORT_ASC])->all();
     }
     public static function getBooksAsArray(){
-        return Books::find()->asArray()->all();
+        return Books::find()->orderBy(['id' => SORT_ASC])->asArray()->all();
+    }
+    public static function getBookAsArray($id){
+        return Books::find()->orderBy(['id' => SORT_ASC])->where(['id' => $id])->asArray()->one();
+    }
+    public static function getBooksCountAsArray($param, $name){
+        return Books::find()->orderBy(['id' => SORT_ASC])->where($param)->andWhere(['like', 'name', $name])->asArray()->all();
     }
     public static function CountMinus($id){
         $book = Books::find()->where(['id' => $id])->one();

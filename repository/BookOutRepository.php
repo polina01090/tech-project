@@ -13,10 +13,13 @@ class BookOutRepository
         return BooksOut::find()->where(['id' => $id])->one();
     }
     public static function getBooksOut(){
-        return BooksOut::find()->all();
+        return BooksOut::find()->orderBy(['id' => SORT_ASC])->all();
     }
-    public static function getBooksOutAsArray(){
-        return BooksOut::find()->all();
+    public static function getBooksOutAsArray($count){
+        return BooksOut::find()->orderBy(['id' => SORT_ASC])->where($count)->asArray()->all();
+    }
+    public static function getBookOutAsArray($count){
+        return BooksOut::find()->orderBy(['id' => SORT_ASC])->where($count)->asArray()->one();
     }
     public static function addBookOut($book_id, $user_staff_id, $user_client_id, $date, $date_deadline){
         $book = new BooksOut();
@@ -33,9 +36,8 @@ class BookOutRepository
         BooksOut::deleteAll(['id' => $id]);
     }
 
-    public static function editBookOut($id,$book_id, $user_staff_id, $user_client_id, $date, $date_deadline){
+    public static function editBookOut($id, $user_staff_id, $user_client_id, $date, $date_deadline){
         $book = BooksOut::find()->where(['id' => $id])->one();
-        $book->book_id = $book_id;
         $book->user_staff_id = $user_staff_id;
         $book->user_client_id = $user_client_id;
         $book->date = $date;
