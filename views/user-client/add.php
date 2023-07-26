@@ -4,7 +4,7 @@
 /** @var yii\bootstrap4\ActiveForm $form */
 
 /** @var $model */
-var_dump($model);
+$this->title = 'Добавление клиента';
 
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;

@@ -26,10 +26,10 @@ class BooksController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['add', 'edit', 'list', 'delete','search'],
+                'only' => ['add', 'edit', 'list', 'delete','search', 'book'],
                 'rules' => [
                     [
-                        'actions' => ['add', 'edit', 'delete', 'list', 'search'],
+                        'actions' => ['add', 'edit', 'delete', 'list', 'search', 'book'],
                         'allow' => true,
                         'roles' => ['@'],
                     ], [

@@ -9,7 +9,7 @@ use yii\i18n\Formatter;
 $formatter = new Formatter();
 /** @var $books */
 ?>
-<?php if (!Yii::$app->user->isGuest):?>
+<?php if (!Yii::$app->user->isGuest): ?>
 <?php endif; ?>
 <table class="table_books">
     <thead>
@@ -34,11 +34,11 @@ $formatter = new Formatter();
             <td><?php echo $formatter->asDate($row['date'], 'php:d.m.Y'); ?></td>
             <td><?php echo $row['author']; ?></td>
             <td><?php echo $row['count']; ?></td>
-            <?php if (!Yii::$app->user->isGuest):?>
-                <td><a href="/books/edit?id=<?=$row['id']?>"><img class="edit" src="/images/edit.png" alt=""></a></td>
-                <td><a href="/books/delete?id=<?=$row['id']?>"><img class="delete" src="/images/delete.png" alt=""></a></td>
-
-                    <td><?php if ($row['count'] > 0):?><a href="/books-out/add?id=<?=$row['id']?>">Выдать</a><?php endif;?></td>
+            <?php if (!Yii::$app->user->isGuest): ?>
+                <td><a href="/books/edit?id=<?= $row['id'] ?>"><img class="edit" src="/images/edit.png" alt=""></a></td>
+                <td><a href="/books/delete?id=<?= $row['id'] ?>"><img class="delete" src="/images/delete.png"
+                                                                      alt=""></a></td>
+                <td><?php if ($row['count'] > 0): ?><a href="/books-out/add?id=<?= $row['id'] ?>">Выдать</a><?php endif; ?></td>
 
 
             <?php endif; ?>

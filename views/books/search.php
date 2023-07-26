@@ -4,9 +4,10 @@
 
 /** @var $counts */
 
-
+$formatter = new Formatter();
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\i18n\Formatter;
 
 ?>
 <!DOCTYPE html>
@@ -41,7 +42,7 @@ use yii\bootstrap4\Html;
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo $row['name']; ?></td>
                 <td><?php echo $row['article']; ?></td>
-                <td><?php echo $row['date']; ?></td>
+                <td><?php echo $formatter->asDate($row['date'], 'php:d.m.Y'); ?></td>
                 <td><?php echo $row['author']; ?></td>
                 <td><?php echo $row['count']; ?></td>
             </tr>

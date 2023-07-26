@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
         ],
     ]); ?>
-    <label>Введите логин</label>
+    <label class="login-form">Введите логин</label>
     <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label(false); ?>
-    <label>Введите пароль</label>
+    <label class="login-form">Введите пароль</label>
     <?= $form->field($model, 'password')->passwordInput()->label(false); ?>
     <?= $form->field($model, 'rememberMe')->checkbox([
         'template' => "<div class=\" custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",

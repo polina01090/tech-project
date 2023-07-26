@@ -6,7 +6,7 @@
 /** @var $model */
 /** @var $users_staffs */
 /** @var $users_client */
-
+$this->title = 'Выдача книги';
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 

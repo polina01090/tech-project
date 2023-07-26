@@ -4,7 +4,7 @@
 /** @var yii\bootstrap4\ActiveForm $form */
 
 /** @var $model */
-
+$this->title = 'Редактирование книги';
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 

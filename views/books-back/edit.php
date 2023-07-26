@@ -6,7 +6,7 @@
 /** @var $model */
 /** @var $users_staffs */
 /** @var $conditions */
-
+$this->title = 'Редактирование';
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 

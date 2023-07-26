@@ -8,9 +8,10 @@
 /** @var $books_name */
 
 /** @var $backs */
-
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\i18n\Formatter;
+$formatter = new Formatter();
 
 ?>
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ use yii\bootstrap4\Html;
     <table class="table_books">
         <thead>
         <tr>
-            <th>id</th>
+            <th>ID выдачи</th>
             <th>Фио</th>
             <th>Книга</th>
             <th>Дата выдачи книги</th>
@@ -47,7 +48,7 @@ use yii\bootstrap4\Html;
                 <td><a href="/books/book?id=<?=$book['book_id']?>"><?php echo $books_name[$book['book_id']]; ?></a></td>
                 <td><?php echo $book['date']; ?></td>
                 <?php if ($book['id'] === key($backs)): ?>
-                    <td><?php echo $book['date']; ?></td>
+                    <td><?php echo $backs[$book['id']]; ?></td>
                 <?php else: ?>
                     <td>не сдано</td>
                 <?php endif ?>
